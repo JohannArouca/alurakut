@@ -28,8 +28,8 @@ export default function Home() {
   const usuarioAleatorio = 'johannarouca';
   const [comunidades, setComunidades] = React.useState([{
     id: '13213543534151435134',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+    titulo: 'Eu odeio acordar cedo',
+    imagem: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
   }]);
   const pessoasFavoritas = [
     'juunegreiros',
@@ -65,8 +65,8 @@ export default function Home() {
 
               const comunidade = {
                 id: new Date().toISOString,
-                titulo: dadosDoForm.get('title'),
-                imagem: dadosDoForm.get('image'),
+                titulo: dadosDoForm.get('titulo'),
+                imagem: dadosDoForm.get('imagem'),
               }
 
               const comunidadesAtualizadas = [...comunidades, comunidade];
@@ -76,7 +76,7 @@ export default function Home() {
               <div>
                 <input 
                   placeholder="Qual vai ser o nome da sua comunidade?" 
-                  name="title" 
+                  name="titulo" 
                   aria-label="Qual vai ser o nome da sua comunidade?"
                   type="text"
                 />
@@ -85,7 +85,7 @@ export default function Home() {
               <div>
                 <input 
                   placeholder="Coloque uma URL para usarmos de capa" 
-                  name="image" 
+                  name="imagem" 
                   aria-label="Coloque uma URL para usarmos de capa"
                 />
               </div>
@@ -123,9 +123,9 @@ export default function Home() {
               {comunidades.map((itemAtual) => {
                 return (
                   <li key={itemAtual.id}>
-                    <a href={`/users/${itemAtual.title}`}>
-                      <img src={itemAtual.image}/>
-                      <span>{itemAtual.title}</span>
+                    <a href={`/users/${itemAtual.titulo}`}>
+                      <img src={itemAtual.imagem}/>
+                      <span>{itemAtual.titulo}</span>
                     </a>
                   </li>
                 )
