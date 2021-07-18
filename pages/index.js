@@ -32,7 +32,7 @@ function ProfileRelationsBox(props) {
       <h2 className="smallTitle">{props.title} ({props.items.length})</h2>
 
       <ul>
-        { seguidores.map((itemAtual) => {
+        { /* seguidores.map((itemAtual) => {
           return (
             <li key={itemAtual}>
               <a href={`https://github.com/${itemAtual}.png`}>
@@ -41,7 +41,7 @@ function ProfileRelationsBox(props) {
               </a>
             </li>
           )
-        }) }
+        }) */ }
       </ul>  
     </ProfileRelationsBoxWrapper>
   )
