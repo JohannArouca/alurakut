@@ -1,4 +1,6 @@
 import React from 'react'
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import {AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet} from '../src/lib/AlurakutCommons'
@@ -30,7 +32,7 @@ function ProfileRelationsBox(props) {
       <h2 className="smallTitle">{props.title} ({props.items.length})</h2>
 
       <ul>
-        {/* seguidores.map((itemAtual) => {
+        { seguidores.map((itemAtual) => {
           return (
             <li key={itemAtual}>
               <a href={`https://github.com/${itemAtual}.png`}>
@@ -39,14 +41,14 @@ function ProfileRelationsBox(props) {
               </a>
             </li>
           )
-        }) */}
+        }) }
       </ul>  
     </ProfileRelationsBoxWrapper>
   )
 }
 
-export default function Home() {
-  const usuarioAleatorio = 'johannarouca';
+export default function Home(props) {
+  const usuarioAleatorio = props.githubUser;
   const [comunidades, setComunidades] = React.useState([]);
   const pessoasFavoritas = [
     'juunegreiros',
@@ -205,4 +207,56 @@ export default function Home() {
       </MainGrid>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN
+  const {githubUser} = jwt.decode(token)
+  const isTrueUser = await fetch(`https://github.com/${githubUser}`)
+  .then(async function(resposta) {
+    if(resposta.status === 404) {
+      return false
+    } else {
+      return true
+    }
+  })
+
+  if(!isTrueUser) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }  
+  }
+
+  return {
+    props: {
+      githubUser
+    }, // will be passed to the pago component as props
+  } 
+
+/*   const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth', {
+    headers: {
+      Authorization: token
+    }
+  })
+  .then((resposta) => resposta.json())
+
+  if(!isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
+
+  
+  return {
+    props: {
+      githubUser
+    }, // will be passed to the pago component as props
+  } */
 }
